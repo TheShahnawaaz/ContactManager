@@ -2,7 +2,7 @@ import React from "react";
 import ContactCards from "./ContactCards";
 
 export default function ContactList(props) {
-  //   console.log(props);
+  //   // //console.log(props);
   const renderContactList = props.Contact.map((person) => {
     return <ContactCards person={person} getContactID={props.getContactID} />;
   });
@@ -20,9 +20,10 @@ export default function ContactList(props) {
           justifyContent: "center",
         }}
       >
+        <i className="address book icon"></i>
         Contact List
       </h1>
-      <div class="ui divider"></div>
+      <div className="ui divider"></div>
       <div className="ui middle aligned divided selection animated list">
         {props.Contact.length ? (
           renderContactList

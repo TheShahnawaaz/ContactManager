@@ -5,10 +5,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AddContact from "./AddContact";
 import ContactList from "./ContactList";
 import Header from "./Header";
-// import "./App.css";
+import "./App.css";
 import Alert from "./Alert";
 import Sidebar from "./Sidebar";
 import ContactDetail from "./ContactDetail";
+import EditContact from "./EditContact";
 
 function App() {
   const LOCAL_STORAGE_KEY = "Contact";
@@ -17,17 +18,17 @@ function App() {
     const retriveContacts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
     if (retriveContacts) {
       setContact(retriveContacts);
-      // console.log("Data takem as");
-      // console.log(Contact)
+      //console.log("Data takem as");
+      // //console.log(Contact);
     }
-    console.log(1);
+    // // //console.log(1);
   }, []);
 
   useEffect(() => {
     if (Contact.length !== 0)
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(Contact));
-    console.log("data set as" + JSON.stringify(Contact));
-    console.log(2);
+    // //console.log("data set as" + JSON.stringify(Contact));
+    //console.log(2);
   }, [Contact]);
 
   function hashCode(str) {
@@ -37,31 +38,125 @@ function App() {
     });
     return hash;
   }
-  const addContactHandler = (people) => {
-    console.log(3);
-    console.log(people);
-    // setContact([...Contact, { id: uuid(), ...people }]);sond
-    const { name, email , no } = people;
+
+  const upadteContactHandler = (people, key) => {
+    //console.log(people);
+    //console.log(key);
+    // getContactID(key);
+    var fullname = people["name"];
+    people["name"] = "";
+    //console.log(fullname);
+    fullname.split(" ").map((word) => {
+      return (
+        word !== "" &&
+        (people["name"] =
+          people["name"] +
+          word[0].toUpperCase() +
+          word.slice(1).toLowerCase() +
+          " ")
+      );
+    });
+    //console.log(fullname);
+    // people["name"] = fullname;
+    // people["name"] = people["name"][0].toUpperCase() + people["name"].slice(1).toLowerCase();
+    //capitalize email
+    if (people["email"])
+      people["email"] =
+        people["email"][0].toUpperCase() +
+        people["email"].slice(1).toLowerCase();
+    else people["email"] = "No@mail";
+
+    var { name, email } = people;
+    // name to capitalize
+    const no = people["no"];
+    //console.log(name, email, no);
     if (
-      Contact.find((person) => person.name === name && (person.email === email || person.no === no))
+      Contact.find(
+        (person) =>
+          person.name === name && person.email === email && person.no === no
+      )
     ) {
-      showAlert(true, "WARNING", "Contact already exists");
+      showAlert("error", "WARNING", "Contact Not edited");
     } else {
-      const newHash = hashCode(name + email);
+      const newHash = hashCode(name + email + no);
+
+      let con = Contact.filter((p) => {
+        //console.log(p);
+        return p.id !== key;
+      });
+      // let con = Contact;
+      const cont = [...con, { id: newHash, ...people }];
+
+      // const con = [...Contact, { id: newHash, ...people }];
+      // //console.log(Contact);
+      // //console.log(con);
+      setContact(cont);
+      // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(Contact));
+
+      showAlert("success", "Contact Updated", "Contact Updated Successfully");
+    }
+  };
+
+  const addContactHandler = (people) => {
+    // // //console.log(3);
+    // // // //console.log(people);
+    // setContact([...Contact, { id: uuid(), ...people }]);sond
+    // people["name"] = people["name"][].toLowerCase();
+    // capilatize name
+    //console.log(Contact);
+    //console.log(people);
+    var fullname = people["name"];
+    people["name"] = "";
+    //console.log(fullname);
+    fullname.split(" ").map((word) => {
+      return (
+        word !== "" &&
+        (people["name"] =
+          people["name"] +
+          word[0].toUpperCase() +
+          word.slice(1).toLowerCase() +
+          " ")
+      );
+    });
+    //console.log(fullname);
+    // people["name"] = fullname;
+    // people["name"] = people["name"][0].toUpperCase() + people["name"].slice(1).toLowerCase();
+    //capitalize email
+    if (people["email"])
+      people["email"] =
+        people["email"][0].toUpperCase() +
+        people["email"].slice(1).toLowerCase();
+    else people["email"] = "No@mail";
+
+    var { name, email } = people;
+    // name to capitalize
+    name = name.charAt(0).toUpperCase() + name.slice(1);
+    const no = people["no"];
+    //console.log(name, email, no);
+    if (
+      Contact.find(
+        (person) =>
+          person.name === name && person.email === email && person.no === no
+      )
+    ) {
+      showAlert("black", "WARNING", "Contact already exists");
+    } else {
+      const newHash = hashCode(name + email + no);
       const con = [...Contact, { id: newHash, ...people }];
+      // //console.log(Contact);
+      // //console.log(con);
       setContact(con);
-      showAlert(true, "Contact Added", "New Contact Added Successfully");
+      showAlert("success", "Contact Added", "New Contact Added Successfully");
     }
   };
   const getContactID = (id) => {
-    console.log(4);
+    // // // //console.log(4);
     const newContactList = Contact.filter((person) => {
       return person.id !== id;
     });
-    // console.log(newContactList);
-    showAlert(true, "Contact Deleted", "Contact Deleted Successfully");
-
+    // showAlert(true, "Contact Deleted", "Contact Deleted Successfully");
     setContact(newContactList);
+    //console.log(newContactList);
   };
 
   const [alert, setAlert] = useState(null);
@@ -99,6 +194,15 @@ function App() {
                 }
               />
               <Route path="/contact/:id" element={<ContactDetail />} />
+              <Route
+                path="/edit/:id"
+                element={
+                  <EditContact
+                    upadteContactHandler={upadteContactHandler}
+                    showAlert={showAlert}
+                  />
+                }
+              />
             </Routes>
           </div>
         </div>

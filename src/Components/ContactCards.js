@@ -16,34 +16,67 @@ import _0 from "../Images/avatar/0.png"; // Tell webpack this JS file uses this 
 
 export default function ContactCards(props) {
   var { id, name, email, no } = props.person;
-  if(email === "") email = "no@mail";
-  if(no === "") no = "0000000000";
 
   const avatar = [_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _0];
   return (
     <div className="item">
-      <div class="right floated content">
-        <div class="ui button small">
+      <div className="right floated content">
+        <div className="ui large buttons">
+          <Link to={`/edit/${id}`} state={{ person: props.person }}>
+            <button className="ui button edi">
+              <i
+                className="pencil alternate icon"
+                
+              ></i>
+            </button>
+          </Link>
+          <div className="or"></div>
+          <button className="ui button del" onClick={() => props.getContactID(id)}>
+            <i
+              className="trash alternate outline icon left"
+              
+            ></i>
+          </button>
+        </div>
+        {/* <Link to={`/edit/${id}`} state={{ person: props.person }}>
+          <div className="ui button small">
+            <i
+              className="pencil alternate icon"
+              style={{
+                color: "red",
+              }}
+            ></i>
+          </div>
+        </Link>
+        <div className="ui button small" onClick={() => props.getContactID(id)}>
           <i
             className="trash alternate outline icon left"
             style={{
               color: "red",
             }}
-            onClick={() => props.getContactID(id)}
           ></i>
-        </div>
+        </div> */}
       </div>
       <img
-        className="ui avatar image"
+        className="ui avatar mini image"
         src={avatar[id % avatar.length]}
         alt="user"
       />
       <div className="content">
         <Link to={`/contact/${id}`} state={{ person: props.person }}>
           {/* <p>{id}</p> */}
-          <div className="header">{name}</div>
-          <div>{email}</div>
-          <div>{no}</div>
+          <h3 className="header h1">
+            {/* <i className="user outline icon"></i> */}
+            {name}
+          </h3>
+          <div>
+            <i className="envelope outline icon"></i>
+            {email}
+          </div>
+          <div>
+            <i className="phone icon"></i>
+            {no}
+          </div>
         </Link>
       </div>
     </div>

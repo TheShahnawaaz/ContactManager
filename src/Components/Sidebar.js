@@ -15,12 +15,12 @@ export default function Sidebar(props) {
         document
           .getElementById("navbar")
           .getElementsByClassName("item").style.fontSize = "1.5rem";
-        console.log(
-          document.getElementById("navbar").getElementsByClassName("item")
-        );
+        // ////console.log(
+        //   document.getElementById("navbar").getElementsByClassName("item")
+        // );
       }, 1000);
 
-      //   console.log("mobile");
+      //   // ////console.log("mobile");
     } else {
       setTimeout(() => {
         document.getElementById("navbar").classList.add("vertical");
@@ -28,16 +28,16 @@ export default function Sidebar(props) {
         document.getElementById("leftbar").style.width = "50%";
         document.getElementById("leftbar").style.paddingTop = "5rem";
         props.setFlexDirection("row");
-      }, 1000);
+      }, 200);
       //   document.body.style.backgroundColor = "pink";
-      //   console.log("desktop");
+      //   // ////console.log("desktop");
     }
   }
 
   var x = window.matchMedia("(max-width: 700px)");
   myFunction(x); // Call listener function at run time
   x.addListener(myFunction);
-  console.log(props);
+  // ////console.log(props);
   return (
     <div
       className="wide column"
@@ -52,15 +52,14 @@ export default function Sidebar(props) {
         <Link
           to="/"
           className="active teal item"
-            id="contact_button"
+          id="contact_button"
           onClick={() => {
-            document
-              .getElementById("add_button")
-              .classList.remove("active");
+            document.getElementById("add_button").classList.remove("active");
             document.getElementById("contact_button").classList.add("active");
           }}
         >
-          Contacts
+          Contacts  
+          <i className="address book icon"></i>
           <div className="ui teal left pointing label">{props.len}</div>
         </Link>
         <Link
@@ -69,14 +68,17 @@ export default function Sidebar(props) {
           className="item teal"
           onClick={() => {
             document
-              .getElementById("contact_button").classList.remove("active");
+              .getElementById("contact_button")
+              .classList.remove("active");
             document.getElementById("add_button").classList.add("active");
           }}
         >
-          Add Contact
+          Add Contact  
+          <i className="user plus icon"></i>
         </Link>
         <Link to="/add" className="item disabled">
-          Bin
+          Bin  
+          <i className="recycle icon"></i>
           <div className="ui label">0</div>
         </Link>
       </div>

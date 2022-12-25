@@ -1,4 +1,28 @@
+body {
+  transition: all 0.5s ease;
+}
 
-@media (max-width: 600px) {
-
+.form-control {
+  padding-left: 48px !important;
+}
+i {
+  /* position: absolute; */
+  /* top: 50%; */
+  /* left: 10px; */
+  /* transform: translateY(-50%); */
+  transition: all 0.3s ease !important;
+}
+.del:hover i {
+  color: red;
+  scale: 1.3;
+}
+.edi:hover i {
+  color: royalblue;
+  scale: 1.2;
+}
+#navbar i {
+  padding-left: 8px;
+}
+.button > .icon {
+  opacity: 1!important;
 }
