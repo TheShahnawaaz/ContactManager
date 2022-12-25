@@ -24,7 +24,18 @@ export default function ContactList(props) {
       </h1>
       <div class="ui divider"></div>
       <div className="ui middle aligned divided selection animated list">
-        {renderContactList}
+        {props.Contact.length ? (
+          renderContactList
+        ) : (
+          <div>
+            <h2 style={{ display: "flex", justifyContent: "center" }}>
+              No Contacts
+            </h2>
+            <h3 style={{ display: "flex", justifyContent: "center" }}>
+              Add a contact to see it here
+            </h3>
+          </div>
+        )}
       </div>
     </div>
   );

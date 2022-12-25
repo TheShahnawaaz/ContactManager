@@ -5,18 +5,26 @@ export default class AddContact extends Component {
   state = {
     name: "",
     email: "",
+    no: "",
   };
 
   add = (e) => {
     e.preventDefault();
-    if (this.state.name === "" || this.state.email === "") {
+    if (
+      this.state.name === "" ||
+      (this.state.email === "" && this.state.no === "")
+    ) {
       this.props.showAlert(true, "Error", "Please fill all the fields");
       console.log("Please fill all the fields");
       return;
     }
-    // console.log(this.state);
+    if (this.state.email === "") this.state.email = "no@mail";
+    if (this.state.no === "") this.state.no = "0000000000";
+    console.log(this.state);
+
+    // if (no === "") no = "0000000000";
     this.props.addContactHandler(this.state);
-    this.setState({ name: "", email: "" });
+    this.setState({ name: "", email: "", no: "" });
   };
 
   render() {
@@ -30,7 +38,6 @@ export default class AddContact extends Component {
 
     return (
       <div className="ui main" style={{ width: "auto" }}>
-
         <h1
           style={{
             display: "flex",
@@ -60,6 +67,17 @@ export default class AddContact extends Component {
               placeholder="Email"
               value={this.state.email}
               onChange={(e) => this.setState({ email: e.target.value })}
+            />
+          </div>
+          <div className="field">
+            <label>Phone Number</label>
+            <input
+              type="tel"
+              name="mail"
+              pattern="[0-9]{10}"
+              placeholder="Phone Number"
+              value={this.state.no}
+              onChange={(e) => this.setState({ no: e.target.value })}
             />
           </div>
           <button className="ui button blue">Add</button>

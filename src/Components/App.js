@@ -41,9 +41,9 @@ function App() {
     console.log(3);
     console.log(people);
     // setContact([...Contact, { id: uuid(), ...people }]);sond
-    const { name, email } = people;
+    const { name, email , no } = people;
     if (
-      Contact.find((person) => person.name === name && person.email === email)
+      Contact.find((person) => person.name === name && (person.email === email || person.no === no))
     ) {
       showAlert(true, "WARNING", "Contact already exists");
     } else {

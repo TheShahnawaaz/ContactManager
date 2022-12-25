@@ -18,7 +18,7 @@ export default function ContactDetail(props) {
   const location = useLocation();
   const { person } = location.state;
   //   console.log(props.location.state.contact);
-  const { id, name, email } = person;
+  const { id, name, email ,no} = person;
   // console.log(person);
   return (
     <div class="ui main">
@@ -39,6 +39,7 @@ export default function ContactDetail(props) {
               {name}
             </div>
             <div class="description">{email}</div>
+            <div class="description">{no}</div>
           </div>
         </div>
         <Link to="/">

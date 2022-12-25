@@ -15,7 +15,10 @@ import _11 from "../Images/avatar/11.png"; // Tell webpack this JS file uses thi
 import _0 from "../Images/avatar/0.png"; // Tell webpack this JS file uses this image
 
 export default function ContactCards(props) {
-  const { id, name, email } = props.person;
+  var { id, name, email, no } = props.person;
+  if(email === "") email = "no@mail";
+  if(no === "") no = "0000000000";
+
   const avatar = [_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _0];
   return (
     <div className="item">
@@ -40,6 +43,7 @@ export default function ContactCards(props) {
           {/* <p>{id}</p> */}
           <div className="header">{name}</div>
           <div>{email}</div>
+          <div>{no}</div>
         </Link>
       </div>
     </div>
